@@ -29,23 +29,30 @@ class StatsController @Autowired constructor(
     }
 
     @GetMapping("/coffee")
-    fun getStats(): ResponseEntity<List<TransactionDTO>> {
-        TODO("not yet implemented")
-    }
+    fun getStats(): ResponseEntity<List<TransactionDTO>> = buildStatsResponse(
+        transactionService.getTransactions()
+    )
 
     @GetMapping("/coffee/machine/{machineID}")
-    fun getStatsMachine(@PathVariable machineID: Long): ResponseEntity<List<TransactionDTO>> {
-        TODO("not yet implemented")
-    }
+    fun getStatsMachine(@PathVariable machineID: Long): ResponseEntity<List<TransactionDTO>> = buildStatsResponse(
+        transactionService.getTransactionsMachine(machineID)
+    )
 
     @GetMapping("/coffee/user/{userID}")
-    fun getStatsUser(@PathVariable userID: Long): ResponseEntity<List<TransactionDTO>> {
-        TODO("not yet implemented")
-    }
+    fun getStatsUser(@PathVariable userID: Long): ResponseEntity<List<TransactionDTO>> = buildStatsResponse(
+        transactionService.getTransactionsUser(userID)
+    )
 
     @GetMapping("/level/user/{userID}")
     fun getLevelUser(@PathVariable userID: Long): ResponseEntity<List<Float>> {
         TODO("not yet implemented")
     }
+
+    private fun buildStatsResponse(list: List<TransactionModel>): ResponseEntity<List<TransactionDTO>> = list
+        .map(::TransactionDTO)
+        .let { transactions ->
+            return if (transactions.isEmpty()) ResponseEntity.noContent().build()
+            else ResponseEntity.ok(transactions)
+        }
 
 }
