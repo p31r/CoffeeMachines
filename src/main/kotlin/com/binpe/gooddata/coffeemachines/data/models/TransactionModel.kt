@@ -4,11 +4,11 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "purchases")
-public class TransactionModel(
-    @Id
-    @GeneratedValue
-    val purchaseID: Long? = null,
+@Table(name = "TRANSACTIONS")
+data class TransactionModel(
+    @field:Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
     val userID: Long,
     val machineID: Long,
     val timestamp: Date

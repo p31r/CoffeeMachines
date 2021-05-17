@@ -3,11 +3,11 @@ package com.binpe.gooddata.coffeemachines.data.models
 import javax.persistence.*
 
 @Entity
-@Table(name = "users")
-public class UserModel(
-    @Id
+@Table(name = "USERS")
+data class UserModel(
+    @field:Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val userID: Long? = null,
+    var id: Long? = null,
     val login: String,
     val password: String,
     val email: String

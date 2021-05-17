@@ -1,17 +1,15 @@
 package com.binpe.gooddata.coffeemachines.api
 
-import org.joda.time.DateTime
+import com.binpe.gooddata.coffeemachines.data.models.TransactionModel
 import org.springframework.stereotype.Component
 
 @Component
 interface ITransactionService {
-    fun registerTransaction(userID: Long, machineID: Long, buyTime: DateTime)
+    fun registerTransaction(transactionModel: TransactionModel)
 
-    fun registerTransaction(userID: Long, machineID: Long)
+    fun getTransactions(): List<TransactionModel>
 
-    fun getTransactions()
+    fun getTransactionsUser(userID: Long): List<TransactionModel>
 
-    fun getTransactionsUser(userID: Long)
-
-    fun getTransactionsMachine(machineID: Long)
+    fun getTransactionsMachine(machineID: Long): List<TransactionModel>
 }

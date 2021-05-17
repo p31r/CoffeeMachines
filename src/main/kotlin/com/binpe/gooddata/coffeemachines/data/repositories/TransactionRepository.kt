@@ -5,4 +5,7 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface TransactionsRepository : CrudRepository<TransactionModel, Long>
+interface TransactionRepository : CrudRepository<TransactionModel, Long> {
+    fun findAllByMachineID(machineID: Long): Iterable<TransactionModel>
+    fun findAllByUserID(userID: Long): Iterable<TransactionModel>
+}

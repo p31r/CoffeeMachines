@@ -1,6 +1,10 @@
 package com.binpe.gooddata.coffeemachines.api.controllers
 
 import com.binpe.gooddata.coffeemachines.api.IMachineService
+import com.binpe.gooddata.coffeemachines.api.errors.ArgumentException
+import com.binpe.gooddata.coffeemachines.api.utils.ValidatorUtils.isMachineCaffeineValid
+import com.binpe.gooddata.coffeemachines.api.utils.ValidatorUtils.isMachineNameValid
+import com.binpe.gooddata.coffeemachines.data.models.MachineModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.util.MimeTypeUtils
@@ -14,13 +18,15 @@ import org.springframework.web.bind.annotation.RestController
 class MachineController @Autowired constructor(
     val machineService: IMachineService
 ) {
-    data class MachineCreateDTO(
-        val name: String? = null,
-        val caffeine: Double? = null
-    )
-
     @PostMapping
-    fun registerMachine(@RequestBody createMachine: MachineCreateDTO): ResponseEntity<Long> {
-        TODO("not yet implemented")
+    fun registerMachine(@RequestBody machineModel: MachineModel): ResponseEntity<Long> {
+        machineModel.name?.takeIf { isMachineNameValid(it) }
+            ?: throw ArgumentException("Machine name is invalid")
+
+        machineModel.caffeine?.takeIf { isMachineCaffeineValid(it) }
+            ?: throw ArgumentException("Machine caffeine is invalid")
+
+        val createdMachine = machineService.registerMachine(machineModel)
+        return ResponseEntity.ok(createdMachine.id)
     }
 }
