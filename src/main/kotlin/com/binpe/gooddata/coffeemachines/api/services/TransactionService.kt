@@ -14,4 +14,16 @@ class TransactionService : ITransactionService {
         //registerCoffee(userID, machineID, DateTime.now())
         TODO("Not yet implemented")
     }
+
+    override fun getTransactions() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getTransactionsUser(userID: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getTransactionsMachine(machineID: Long) {
+        TODO("Not yet implemented")
+    }
 }

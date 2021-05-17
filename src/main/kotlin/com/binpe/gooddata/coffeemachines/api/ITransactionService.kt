@@ -10,4 +10,8 @@ interface ITransactionService {
     fun registerTransaction(userID: Long, machineID: Long)
 
     fun getTransactions()
+
+    fun getTransactionsUser(userID: Long)
+
+    fun getTransactionsMachine(machineID: Long)
 }
