@@ -33,4 +33,8 @@ class TransactionService @Autowired constructor(
     override fun getTransactionsMachine(machineID: Long): List<TransactionModel> = transactionRepository
         .findAllByMachineID(machineID)
         .toList()
+
+    override fun computeUserCaffeineLevel(userID: Long): List<Double> {
+        TODO("Not yet implemented")
+    }
 }

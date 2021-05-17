@@ -12,4 +12,6 @@ interface ITransactionService {
     fun getTransactionsUser(userID: Long): List<TransactionModel>
 
     fun getTransactionsMachine(machineID: Long): List<TransactionModel>
+
+    fun computeUserCaffeineLevel(userID: Long): List<Double>
 }
