@@ -8,6 +8,6 @@ data class MachineModel(
     @field:Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    val name: String?,
-    val caffeine: Int?
+    val name: String,
+    val caffeine: Int
 )

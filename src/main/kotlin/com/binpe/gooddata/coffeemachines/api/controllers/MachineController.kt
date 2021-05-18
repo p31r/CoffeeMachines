@@ -20,11 +20,8 @@ class MachineController @Autowired constructor(
 ) {
     @PostMapping
     fun registerMachine(@RequestBody machineModel: MachineModel): ResponseEntity<Long> {
-        machineModel.name?.takeIf { isMachineNameValid(it) }
-            ?: throw ArgumentException("Machine name is invalid")
-
-        machineModel.caffeine?.takeIf { isMachineCaffeineValid(it) }
-            ?: throw ArgumentException("Machine caffeine is invalid")
+        if(!isMachineNameValid(machineModel.name)) throw ArgumentException("Machine name is invalid")
+        if(!isMachineCaffeineValid(machineModel.caffeine)) throw ArgumentException("Machine caffeine is invalid")
 
         val createdMachine = machineService.registerMachine(machineModel)
         return ResponseEntity.ok(createdMachine.id)

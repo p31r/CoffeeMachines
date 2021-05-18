@@ -7,5 +7,7 @@ import org.springframework.stereotype.Component
 interface IMachineService {
     fun registerMachine(machineModel: MachineModel): MachineModel
 
+    fun getMachineByIDOrThrow(machineID: Long): MachineModel
+
     fun machineExists(machineID: Long): Boolean
 }

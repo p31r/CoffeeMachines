@@ -13,5 +13,6 @@ interface ITransactionService {
 
     fun getTransactionsMachine(machineID: Long): List<TransactionModel>
 
+    // TODO move to separate service
     fun computeUserCaffeineLevel(userID: Long): List<Double>
 }

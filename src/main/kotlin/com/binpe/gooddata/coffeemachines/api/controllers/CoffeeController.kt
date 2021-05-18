@@ -1,6 +1,7 @@
 package com.binpe.gooddata.coffeemachines.api.controllers
 
 import com.binpe.gooddata.coffeemachines.api.ITransactionService
+import com.binpe.gooddata.coffeemachines.api.errors.ArgumentException
 import com.binpe.gooddata.coffeemachines.data.models.TransactionModel
 import org.joda.time.DateTime
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,17 +23,22 @@ class CoffeeController @Autowired constructor(
         @PathVariable machineID: Long,
         @RequestBody(required = false) dto: CoffeePurchaseDTO? = null
     ): ResponseEntity<Unit> {
-        val transactionModel = createTransactionModel(userID, machineID, dto?.timestamp)
+        val actualTime = DateTime.now()
+        val timestamp = (dto?.timestamp?.let { DateTime(it) } ?: actualTime).takeIf {
+            !it.isAfter(actualTime)
+        } ?: throw ArgumentException("Invalid timestamp")
+
+        val transactionModel = createTransactionModel(userID, machineID, timestamp.toDate())
         transactionService.registerTransaction(transactionModel)
 
         return ResponseEntity.ok().build()
     }
 
     private fun createTransactionModel(
-        userID: Long, machineID: Long, timestamp: String?
+        userID: Long, machineID: Long, timestamp: Date
     ): TransactionModel = TransactionModel(
         userID = userID,
         machineID = machineID,
-        timestamp = timestamp?.let { DateTime(it).toDate() } ?: Date()
+        timestamp = timestamp
     )
 }
