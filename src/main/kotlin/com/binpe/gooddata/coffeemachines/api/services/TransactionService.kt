@@ -47,14 +47,12 @@ class TransactionService @Autowired constructor(
         val userTransactions = transactionCache.getCachedSortedTransactions(userID)
         val computedEntries = userTransactions.map { computeOneEntry(it.caffeine, it.timestamp, actualTime) }
 
-        val foldedResult = computedEntries.fold(
+        return computedEntries.fold(
             (List(24) { 0.0 }),
             { finalList, entry ->
                 zipLists(finalList, entry)
             }
         )
-
-        return foldedResult
     }
 
     private fun computeOneEntry(caffeine: Int, timestamp: DateTime, actualTime: DateTime): List<Double> {
@@ -101,19 +99,3 @@ class TransactionService @Autowired constructor(
 
     private fun zipLists(first: List<Double>, second: List<Double>) = first.zip(second) { xv, yv -> xv + yv }
 }
-
-/*
-fun main() {
-    val list1 = listOf(1,2,3)
-    val list2 = listOf(1,2,3)
-    val both = listOf(list1, list2)
-
-    val foldedResult = both.fold(
-        (List(24) { 0.0 }),
-        { finalList, entry ->
-            finalList.zip(entry) { xv, yv -> xv + yv }
-        }
-    )
-
-    println(foldedResult)
-}*/

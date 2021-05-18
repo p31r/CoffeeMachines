@@ -2,6 +2,12 @@ package com.binpe.gooddata.coffeemachines.api.utils
 
 import java.util.regex.Pattern.compile
 
+/**
+ * Util static class used for validations
+ *
+ * @author  Petr Binčík
+ * @version 1.0
+ * */
 object ValidatorUtils {
     private val emailRegexPattern = compile(
         "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]|[\\w-]{2,}))@"
@@ -13,8 +19,8 @@ object ValidatorUtils {
     )
 
     /* Validators for user */
-    fun isLoginValid(login: String?): Boolean = !login.isNullOrBlank() && login.length > 4
-    fun isPasswordValid(password: String?): Boolean = !password.isNullOrBlank() && password.length > 4
+    fun isLoginValid(login: String?): Boolean = !login.isNullOrBlank() && login.length >= 4
+    fun isPasswordValid(password: String?): Boolean = !password.isNullOrBlank() && password.length >= 4
     fun isEmailValid(email: String?): Boolean = !email.isNullOrBlank() && emailRegexPattern.matcher(email).matches()
 
     /* Validators for machine */
